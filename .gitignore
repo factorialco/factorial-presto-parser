@@ -1,0 +1,7 @@
+Gemfile.lock
+pkg/
+*.o
+*.o.tmp
+ext/presto_parser/Makefile
+ext/presto_parser/mkmf.log
+*.bundle
