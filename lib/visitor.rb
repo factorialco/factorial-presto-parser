@@ -3,14 +3,322 @@
 
 module PrestoParser
   class Visitor
+    extend T::Sig
+
     UnrecognizedContextError = Class.new(StandardError)
 
+    sig { params(input: String).returns(T.untyped) }
     def accept(input)
-      parser = parse(input)
+      context = parse(input)
+      visit(context)
     end
 
     protected
 
+    sig { params(context: PrestoParser::Context).returns(T::Array[T.untyped]) }
+    def visit_children(context)
+      context.children.map { |child| visit(child) }
+    end
+
+    sig { params(context: PrestoParser::QueryContext).returns(T.untyped) }
+    def visit_query(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::WithContext).returns(T.untyped) }
+    def visit_with(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TableElementContext).returns(T.untyped) }
+    def visit_table_element(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ColumnDefinitionContext).returns(T.untyped) }
+    def visit_column_definition(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::LikeClauseContext).returns(T.untyped) }
+    def visit_like_clause(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TablePropertiesContext).returns(T.untyped) }
+    def visit_table_properties(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TablePropertyContext).returns(T.untyped) }
+    def visit_table_property(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QueryNoWithContext).returns(T.untyped) }
+    def visit_query_no_with(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QueryTermContext).returns(T.untyped) }
+    def visit_query_term(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QueryPrimaryContext).returns(T.untyped) }
+    def visit_query_primary(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::SortItemContext).returns(T.untyped) }
+    def visit_sort_item(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QuerySpecificationContext).returns(T.untyped) }
+    def visit_query_specification(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::GroupByContext).returns(T.untyped) }
+    def visit_group_by(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::GroupingElementContext).returns(T.untyped) }
+    def visit_grouping_element(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::GroupingExpressionsContext).returns(T.untyped) }
+    def visit_grouping_expressions(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::GroupingSetContext).returns(T.untyped) }
+    def visit_grouping_set(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::NamedQueryContext).returns(T.untyped) }
+    def visit_named_query(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::SetQuantifierContext).returns(T.untyped) }
+    def visit_set_quantifier(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::SelectItemContext).returns(T.untyped) }
+    def visit_select_item(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::RelationContext).returns(T.untyped) }
+    def visit_relation(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::JoinTypeContext).returns(T.untyped) }
+    def visit_join_type(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::JoinCriteriaContext).returns(T.untyped) }
+    def visit_join_criteria(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::SampledRelationContext).returns(T.untyped) }
+    def visit_sampled_relation(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::SampleTypeContext).returns(T.untyped) }
+    def visit_sample_type(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::AliasedRelationContext).returns(T.untyped) }
+    def visit_aliased_relation(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ColumnAliasesContext).returns(T.untyped) }
+    def visit_column_aliases(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::RelationPrimaryContext).returns(T.untyped) }
+    def visit_relation_primary(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ExpressionContext).returns(T.untyped) }
+    def visit_expression(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::BooleanExpressionContext).returns(T.untyped) }
+    def visit_boolean_expression(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::PredicatedContext).returns(T.untyped) }
+    def visit_predicated(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::PredicateContext).returns(T.untyped) }
+    def visit_predicate(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ValueExpressionContext).returns(T.untyped) }
+    def visit_value_expression(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::PrimaryExpressionContext).returns(T.untyped) }
+    def visit_primary_expression(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TimeZoneSpecifierContext).returns(T.untyped) }
+    def visit_time_zone_specifier(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ComparisonOperatorContext).returns(T.untyped) }
+    def visit_comparison_operator(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ComparisonQuantifierContext).returns(T.untyped) }
+    def visit_comparison_quantifier(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::BooleanValueContext).returns(T.untyped) }
+    def visit_boolean_value(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::IntervalContext).returns(T.untyped) }
+    def visit_interval(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::IntervalFieldContext).returns(T.untyped) }
+    def visit_interval_field(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TypeContext).returns(T.untyped) }
+    def visit_type(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TypeParameterContext).returns(T.untyped) }
+    def visit_type_parameter(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::BaseTypeContext).returns(T.untyped) }
+    def visit_base_type(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::WhenClauseContext).returns(T.untyped) }
+    def visit_when_clause(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::FilterContext).returns(T.untyped) }
+    def visit_filter(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::OverContext).returns(T.untyped) }
+    def visit_over(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::WindowFrameContext).returns(T.untyped) }
+    def visit_window_frame(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::FrameBoundContext).returns(T.untyped) }
+    def visit_frame_bound(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::ExplainOptionContext).returns(T.untyped) }
+    def visit_explain_option(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::TransactionModeContext).returns(T.untyped) }
+    def visit_transaction_mode(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::LevelOfIsolationContext).returns(T.untyped) }
+    def visit_level_of_isolation(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::CallArgumentContext).returns(T.untyped) }
+    def visit_call_argument(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::PrivilegeContext).returns(T.untyped) }
+    def visit_privilege(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QualifiedNameContext).returns(T.untyped) }
+    def visit_qualified_name(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::IdentifierContext).returns(T.untyped) }
+    def visit_identifier(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::QuotedIdentifierContext).returns(T.untyped) }
+    def visit_quoted_identifier(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::NumberContext).returns(T.untyped) }
+    def visit_number(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::NonReservedContext).returns(T.untyped) }
+    def visit_non_reserved(context)
+      visit_children(context)
+    end
+
+    sig { params(context: PrestoParser::NormalFormContext).returns(T.untyped) }
+    def visit_normal_form(context)
+      visit_children(context)
+    end
+
+    private
+
+    sig { params(input: String).returns(PrestoParser::Context) }
+    def parse(input)
+      PrestoParser::Parser.parse(input).query
+    end
+
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    sig { params(context: PrestoParser::Context).returns(T.untyped) }
     def visit(context)
       case context
       when PrestoParser::QueryContext
@@ -108,9 +416,9 @@ module PrestoParser
       when PrestoParser::FrameBoundContext
         visit_frame_bound(context)
       when PrestoParser::ExplainOptionContext
-        visit_transaction_mode(context)
+        visit_explain_option(context)
       when PrestoParser::TransactionModeContext
-        visit_level_of_isolation(context)
+        visit_transaction_mode(context)
       when PrestoParser::LevelOfIsolationContext
         visit_level_of_isolation(context)
       when PrestoParser::CallArgumentContext
@@ -132,499 +440,6 @@ module PrestoParser
       else raise UnrecognizedContextError
       end
     end
-
-    def visit_children(context)
-      context.children.map { |child| visit(child) }
-    end
-
-    def visit_query(context)
-      visit_children(context)
-    end
-
-    def visit_with(context)
-      visit_children(context)
-    end
-
-    def visit_table_element(context)
-      visit_children(context)
-    end
-
-    def visit_column_definition(context)
-      visit_children(context)
-    end
-
-    def visit_like_clause(context)
-      visit_children(context)
-    end
-
-    def visit_table_properties(context)
-      visit_children(context)
-    end
-
-    def visit_table_property(context)
-      visit_children(context)
-    end
-
-    def visit_query_no_with(context)
-      visit_children(context)
-    end
-
-    def visit_query_term_default(context)
-      visit_children(context)
-    end
-
-    def visit_set_operation(context)
-      visit_children(context)
-    end
-
-    def visit_query_primary(context)
-      visit_children(context)
-    end
-
-    def visit_table(context)
-      visit_children(context)
-    end
-
-    def visit_inline_table(context)
-      visit_children(context)
-    end
-
-    def visit_subquery(context)
-      visit_children(context)
-    end
-
-    def visit_sort_item(context)
-      visit_children(context)
-    end
-
-    def visit_query_specification(context)
-      visit_children(context)
-    end
-
-    def visit_group_by(context)
-      visit_children(context)
-    end
-
-    def visit_grouping_element(context)
-      visit_children(context)
-    end
-
-    def visit_single_grouping_set(context)
-      visit_children(context)
-    end
-
-    def visit_rollup(context)
-      visit_children(context)
-    end
-
-    def visit_cube(context)
-      visit_children(context)
-    end
-
-    def visit_multiple_grouping_sets(context)
-      visit_children(context)
-    end
-
-    def visit_grouping_expressions(context)
-      visit_children(context)
-    end
-
-    def visit_grouping_set(context)
-      visit_children(context)
-    end
-
-    def visit_named_query(context)
-      visit_children(context)
-    end
-
-    def visit_set_quantifier(context)
-      visit_children(context)
-    end
-
-    def visit_select_item(context)
-      visit_children(context)
-    end
-
-    def visit_relation_default(context)
-      visit_children(context)
-    end
-
-    def visit_join_relation(context)
-      visit_children(context)
-    end
-
-    def visit_join_type(context)
-      visit_children(context)
-    end
-
-    def visit_join_criteria(context)
-      visit_children(context)
-    end
-
-    def visit_sampled_relation(context)
-      visit_children(context)
-    end
-
-    def visit_sample_type(context)
-      visit_children(context)
-    end
-
-    def visit_aliased_relation(context)
-      visit_children(context)
-    end
-
-    def visit_column_aliases(context)
-      visit_children(context)
-    end
-
-    def visit_table_name(context)
-      visit_children(context)
-    end
-
-    def visit_subquery_relation(context)
-      visit_children(context)
-    end
-
-    def visit_unnest(context)
-      visit_children(context)
-    end
-
-    def visit_parenthesized_relation(context)
-      visit_children(context)
-    end
-
-    def visit_expression(context)
-      visit_children(context)
-    end
-
-    def visit_logical_not(context)
-      visit_children(context)
-    end
-
-    def visit_boolean_default(context)
-      visit_children(context)
-    end
-
-    def visit_logical_binary(context)
-      visit_children(context)
-    end
-
-    def visit_predicated(context)
-      visit_children(context)
-    end
-
-    def visit_comparison(context)
-      visit_children(context)
-    end
-
-    def visit_quantified_comparison(context)
-      visit_children(context)
-    end
-
-    def visit_between(context)
-      visit_children(context)
-    end
-
-    def visit_in_list(context)
-      visit_children(context)
-    end
-
-    def visit_in_subquery(context)
-      visit_children(context)
-    end
-
-    def visit_like(context)
-      visit_children(context)
-    end
-
-    def visit_null_predicate(context)
-      visit_children(context)
-    end
-
-    def visit_distinct_from(context)
-      visit_children(context)
-    end
-
-    def visit_value_expression(context)
-      visit_children(context)
-    end
-
-    def visit_concatenation(context)
-      visit_children(context)
-    end
-
-    def visit_arithmetic_binary(context)
-      visit_children(context)
-    end
-
-    def visit_arithmetic_unary(context)
-      visit_children(context)
-    end
-
-    def visit_at_time_zone(context)
-      visit_children(context)
-    end
-
-    def visit_dereference(context)
-      visit_children(context)
-    end
-
-    def visit_type_constructor(context)
-      visit_children(context)
-    end
-
-    def visit_special_date_time_function(context)
-      visit_children(context)
-    end
-
-    def visit_substring(context)
-      visit_children(context)
-    end
-
-    def visit_cast(context)
-      visit_children(context)
-    end
-
-    def visit_lambda(context)
-      visit_children(context)
-    end
-
-    def visit_parenthesized_expression(context)
-      visit_children(context)
-    end
-
-    def visit_parameter(context)
-      visit_children(context)
-    end
-
-    def visit_normalize(context)
-      visit_children(context)
-    end
-
-    def visit_interval_literal(context)
-      visit_children(context)
-    end
-
-    def visit_numeric_literal(context)
-      visit_children(context)
-    end
-
-    def visit_boolean_literal(context)
-      visit_children(context)
-    end
-
-    def visit_simple_case(context)
-      visit_children(context)
-    end
-
-    def visit_column_reference(context)
-      visit_children(context)
-    end
-
-    def visit_null_literal(context)
-      visit_children(context)
-    end
-
-    def visit_row_constructor(context)
-      visit_children(context)
-    end
-
-    def visit_subscript(context)
-      visit_children(context)
-    end
-
-    def visit_subquery_expression(context)
-      visit_children(context)
-    end
-
-    def visit_binary_literal(context)
-      visit_children(context)
-    end
-
-    def visit_extract(context)
-      visit_children(context)
-    end
-
-    def visit_string_literal(context)
-      visit_children(context)
-    end
-
-    def visit_array_constructor(context)
-      visit_children(context)
-    end
-
-    def visit_function_call(context)
-      visit_children(context)
-    end
-
-    def visit_exists(context)
-      visit_children(context)
-    end
-
-    def visit_position(context)
-      visit_children(context)
-    end
-
-    def visit_searched_case(context)
-      visit_children(context)
-    end
-
-    def visit_time_zone_interval(context)
-      visit_children(context)
-    end
-
-    def visit_time_zone_string(context)
-      visit_children(context)
-    end
-
-    def visit_comparison_operator(context)
-      visit_children(context)
-    end
-
-    def visit_comparison_quantifier(context)
-      visit_children(context)
-    end
-
-    def visit_boolean_value(context)
-      visit_children(context)
-    end
-
-    def visit_interval(context)
-      visit_children(context)
-    end
-
-    def visit_interval_field(context)
-      visit_children(context)
-    end
-
-    def visit_type(context)
-      visit_children(context)
-    end
-
-    def visit_type_parameter(context)
-      visit_children(context)
-    end
-
-    def visit_base_type(context)
-      visit_children(context)
-    end
-
-    def visit_when_clause(context)
-      visit_children(context)
-    end
-
-    def visit_filter(context)
-      visit_children(context)
-    end
-
-    def visit_over(context)
-      visit_children(context)
-    end
-
-    def visit_window_frame(context)
-      visit_children(context)
-    end
-
-    def visit_unbounded_frame(context)
-      visit_children(context)
-    end
-
-    def visit_current_row_bound(context)
-      visit_children(context)
-    end
-
-    def visit_bounded_frame(context)
-      visit_children(context)
-    end
-
-    def visit_explain_format(context)
-      visit_children(context)
-    end
-
-    def visit_explain_type(context)
-      visit_children(context)
-    end
-
-    def visit_isolation_level(context)
-      visit_children(context)
-    end
-
-    def visit_transaction_access_mode(context)
-      visit_children(context)
-    end
-
-    def visit_read_uncommitted(context)
-      visit_children(context)
-    end
-
-    def visit_read_committed(context)
-      visit_children(context)
-    end
-
-    def visit_repeatable_read(context)
-      visit_children(context)
-    end
-
-    def visit_serializable(context)
-      visit_children(context)
-    end
-
-    def visit_positional_argument(context)
-      visit_children(context)
-    end
-
-    def visit_named_argument(context)
-      visit_children(context)
-    end
-
-    def visit_privilege(context)
-      visit_children(context)
-    end
-
-    def visit_qualified_name(context)
-      visit_children(context)
-    end
-
-    def visit_unquoted_identifier(context)
-      visit_children(context)
-    end
-
-    def visit_quoted_identifier_alternative(context)
-      visit_children(context)
-    end
-
-    def visit_back_quoted_identifier(context)
-      visit_children(context)
-    end
-
-    def visit_digit_identifier(context)
-      visit_children(context)
-    end
-
-    def visit_quoted_identifier(context)
-      visit_children(context)
-    end
-
-    def visit_decimal_literal(context)
-      visit_children(context)
-    end
-
-    def visit_integer_literal(context)
-      visit_children(context)
-    end
-
-    def visit_non_reserved(context)
-      visit_children(context)
-    end
-
-    def visit_normal_form(context)
-      visit_children(context)
-    end
-
-    private
-
-    def parse(input)
-      PrestoParser::Parser.parse(input).query
-    end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   end
 end

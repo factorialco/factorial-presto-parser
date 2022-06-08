@@ -1,3 +1,5 @@
+# typed: false
+
 require 'mkmf-rice'
 
 extension_name = 'presto_parser'
