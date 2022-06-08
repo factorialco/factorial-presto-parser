@@ -16,9 +16,6 @@
 class  PrestoBaseListener : public PrestoListener {
 public:
 
-  virtual void enterSingleQuery(PrestoParser::SingleQueryContext * /*ctx*/) override { }
-  virtual void exitSingleQuery(PrestoParser::SingleQueryContext * /*ctx*/) override { }
-
   virtual void enterQuery(PrestoParser::QueryContext * /*ctx*/) override { }
   virtual void exitQuery(PrestoParser::QueryContext * /*ctx*/) override { }
 

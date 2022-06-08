@@ -15,10 +15,6 @@
 class  PrestoBaseVisitor : public PrestoVisitor {
 public:
 
-  virtual std::any visitSingleQuery(PrestoParser::SingleQueryContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual std::any visitQuery(PrestoParser::QueryContext *ctx) override {
     return visitChildren(ctx);
   }

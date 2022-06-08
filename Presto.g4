@@ -18,12 +18,8 @@ tokens {
     DELIMITER
 }
 
-singleQuery
-    : query EOF
-    ;
-
 query
-    :  with? queryNoWith
+    :  with? queryNoWith EOF
     ;
 
 with

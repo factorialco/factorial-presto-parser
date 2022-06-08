@@ -19,8 +19,6 @@ public:
   /**
    * Visit parse trees produced by PrestoParser.
    */
-    virtual std::any visitSingleQuery(PrestoParser::SingleQueryContext *context) = 0;
-
     virtual std::any visitQuery(PrestoParser::QueryContext *context) = 0;
 
     virtual std::any visitWith(PrestoParser::WithContext *context) = 0;

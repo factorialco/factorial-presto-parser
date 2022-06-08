@@ -24,7 +24,6 @@ using namespace std;
 using namespace Rice;
 using namespace antlr4;
 
-Class rb_cSingleQueryContext;
 Class rb_cQueryContext;
 Class rb_cQueryNoWithContext;
 Class rb_cWithContext;
@@ -269,19 +268,12 @@ public:
 };
 
 
-class SingleQueryContextProxy : public ContextProxy {
-public:
-  SingleQueryContextProxy(tree::ParseTree* ctx) : ContextProxy(ctx) {};
-  Object query();
-  Object EOF();
-};
-
 class QueryContextProxy : public ContextProxy {
 public:
   QueryContextProxy(tree::ParseTree* ctx) : ContextProxy(ctx) {};
   Object queryNoWith();
   Object with();
-
+  Object EOF();
 };
 
 class QueryNoWithContextProxy : public ContextProxy {
@@ -1550,26 +1542,6 @@ public:
   Object INTEGER_VALUE();
 };
 
-
-namespace Rice::detail {
-  template <>
-  class To_Ruby<PrestoParser::SingleQueryContext*> {
-  public:
-    VALUE convert(PrestoParser::SingleQueryContext* const &x) {
-      if (!x) return Nil;
-      return Data_Object<PrestoParser::SingleQueryContext>(x, false, rb_cSingleQueryContext);
-    }
-  };
-
-  template <>
-  class To_Ruby<SingleQueryContextProxy*> {
-  public:
-    VALUE convert(SingleQueryContextProxy* const &x) {
-      if (!x) return Nil;
-      return Data_Object<SingleQueryContextProxy>(x, false, rb_cSingleQueryContext);
-    }
-  };
-}
 
 namespace Rice::detail {
   template <>
@@ -4352,41 +4324,6 @@ namespace Rice::detail {
 }
 
 
-Object SingleQueryContextProxy::query() {
-  if (orig == nullptr) {
-    return Qnil;
-  }
-
-  auto ctx = ((PrestoParser::SingleQueryContext*)orig) -> query();
-
-  if (ctx == nullptr) {
-    return Qnil;
-  }
-
-  for (auto child : getChildren()) {
-    if (ctx == detail::From_Ruby<ContextProxy>().convert(child.value()).getOriginal()) {
-      return child;
-    }
-  }
-
-  return Nil;
-}
-
-Object SingleQueryContextProxy::EOF() {
-  if (orig == nullptr) {
-    return Qnil;
-  }
-
-  auto token = ((PrestoParser::SingleQueryContext*)orig) -> EOF();
-
-  if (token == nullptr) {
-    return Qnil;
-  }
-
-  TerminalNodeProxy proxy(token);
-  return detail::To_Ruby<TerminalNodeProxy>().convert(proxy);
-}
-
 Object QueryContextProxy::queryNoWith() {
   if (orig == nullptr) {
     return Qnil;
@@ -4425,6 +4362,21 @@ Object QueryContextProxy::with() {
   }
 
   return Nil;
+}
+
+Object QueryContextProxy::EOF() {
+  if (orig == nullptr) {
+    return Qnil;
+  }
+
+  auto token = ((PrestoParser::QueryContext*)orig) -> EOF();
+
+  if (token == nullptr) {
+    return Qnil;
+  }
+
+  TerminalNodeProxy proxy(token);
+  return detail::To_Ruby<TerminalNodeProxy>().convert(proxy);
 }
 
 Object QueryNoWithContextProxy::queryTerm() {
@@ -12246,11 +12198,6 @@ public:
     }
   }
 
-  virtual antlrcpp::Any visitSingleQuery(PrestoParser::SingleQueryContext *ctx) override {
-    SingleQueryContextProxy proxy(ctx);
-    return getSelf().call("visit_single_query", &proxy);
-  }
-
   virtual antlrcpp::Any visitQuery(PrestoParser::QueryContext *ctx) override {
     QueryContextProxy proxy(ctx);
     return getSelf().call("visit_query", &proxy);
@@ -12878,15 +12825,15 @@ public:
     return parser;
   }
 
-  Object singleQuery() {
-    auto ctx = this -> parser -> singleQuery();
+  Object query() {
+    auto ctx = this -> parser -> query();
 
-    SingleQueryContextProxy proxy((PrestoParser::SingleQueryContext*) ctx);
-    return detail::To_Ruby<SingleQueryContextProxy>().convert(proxy);
+    QueryContextProxy proxy((PrestoParser::QueryContext*) ctx);
+    return detail::To_Ruby<QueryContextProxy>().convert(proxy);
   }
 
   Object visit(VisitorProxy* visitor) {
-    auto result = visitor -> visit(this -> parser -> singleQuery());
+    auto result = visitor -> visit(this -> parser -> query());
 
     // reset for the next visit call
     this -> lexer -> reset();
@@ -12935,11 +12882,7 @@ namespace Rice::detail {
 
 
 Object ContextProxy::wrapParseTree(tree::ParseTree* node) {
-  if (antlrcpp::is<PrestoParser::SingleQueryContext*>(node)) {
-    SingleQueryContextProxy proxy((PrestoParser::SingleQueryContext*)node);
-    return detail::To_Ruby<SingleQueryContextProxy>().convert(proxy);
-  }
-  else if (antlrcpp::is<PrestoParser::QueryContext*>(node)) {
+  if (antlrcpp::is<PrestoParser::QueryContext*>(node)) {
     QueryContextProxy proxy((PrestoParser::QueryContext*)node);
     return detail::To_Ruby<QueryContextProxy>().convert(proxy);
   }
@@ -13531,7 +13474,6 @@ void Init_presto_parser() {
     .define_constructor(Constructor<VisitorProxy, Object>())
     .define_method("visit", &VisitorProxy::ruby_visit)
     .define_method("visit_children", &VisitorProxy::ruby_visitChildren)
-    .define_method("visit_single_query", &VisitorProxy::ruby_visitChildren)
     .define_method("visit_query", &VisitorProxy::ruby_visitChildren)
     .define_method("visit_with", &VisitorProxy::ruby_visitChildren)
     .define_method("visit_table_element", &VisitorProxy::ruby_visitChildren)
@@ -13657,16 +13599,13 @@ void Init_presto_parser() {
   rb_cParser = define_class_under<ParserProxy>(rb_mPrestoParser, "Parser")
     .define_singleton_function("parse", &ParserProxy::parse)
     .define_singleton_function("parse_file", &ParserProxy::parseFile)
-    .define_method("singleQuery", &ParserProxy::singleQuery, Return().keepAlive())
+    .define_method("query", &ParserProxy::query, Return().keepAlive())
     .define_method("visit", &ParserProxy::visit, Return().keepAlive());
-
-  rb_cSingleQueryContext = define_class_under<SingleQueryContextProxy, ContextProxy>(rb_mPrestoParser, "SingleQueryContext")
-    .define_method("query", &SingleQueryContextProxy::query)
-    .define_method("EOF", &SingleQueryContextProxy::EOF);
 
   rb_cQueryContext = define_class_under<QueryContextProxy, ContextProxy>(rb_mPrestoParser, "QueryContext")
     .define_method("query_no_with", &QueryContextProxy::queryNoWith)
-    .define_method("with", &QueryContextProxy::with);
+    .define_method("with", &QueryContextProxy::with)
+    .define_method("EOF", &QueryContextProxy::EOF);
 
   rb_cQueryNoWithContext = define_class_under<QueryNoWithContextProxy, ContextProxy>(rb_mPrestoParser, "QueryNoWithContext")
     .define_method("query_term", &QueryNoWithContextProxy::queryTerm)

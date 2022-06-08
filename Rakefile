@@ -13,7 +13,7 @@ task :generate do
   generator = Antlr4Native::Generator.new(
     grammar_files:      ["./Presto.g4"],
     output_dir:         'ext/',
-    parser_root_method: 'singleQuery'
+    parser_root_method: 'query'
   )
 
   generator.generate

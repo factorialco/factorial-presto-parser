@@ -2,7 +2,7 @@
 < grammar SqlBase;
 ---
 > grammar Presto;
-21,87c21,22
+21,89d20
 < singleStatement
 <     : statement EOF
 <     ;
@@ -70,26 +70,29 @@
 <     | EXECUTE identifier (USING expression (',' expression)*)?         #execute
 <     | DESCRIBE INPUT identifier                                        #describeInput
 <     | DESCRIBE OUTPUT identifier                                       #describeOutput
+<     ;
+< 
+91c22
+<     :  with? queryNoWith
 ---
-> singleQuery
->     : query EOF
-249c184
+>     :  with? queryNoWith EOF
+249c180
 <     : valueExpression predicate[$valueExpression.ctx]?
 ---
 >     : valueExpression predicate?
-252c187
+252c183
 < predicate[ParserRuleContext value]
 ---
 > predicate
-259c194
+259c190
 <     | IS NOT? NULL                                                        #nullPredicate
 ---
 >     | IS NOT? NULLTOKEN                                                   #nullPredicate
-273c208
+273c204
 <     : NULL                                                                                #nullLiteral
 ---
 >     : NULLTOKEN                                                                           #nullLiteral
-493c428
+493c424
 < NULL: 'NULL';
 ---
 > NULLTOKEN: 'NULL';

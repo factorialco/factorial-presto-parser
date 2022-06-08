@@ -1,5 +1,4 @@
-require 'trino_parser'
+require 'presto_parser'
 
-parser = TrinoParser::Parser.parse('SELECT 1')
-puts parser.singleStatement.methods - Object.methods
-puts parser.singleStatement.text
+puts PrestoParser::Parser.parse('SELECT * FROM `somewhere`')
+    .query
