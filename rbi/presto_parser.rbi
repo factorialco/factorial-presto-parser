@@ -31,15 +31,20 @@ module PrestoParser
 
   class TerminalNodeImpl < PrestoParser::Context; end
 
+  class SingleQueryContext < PrestoParser::Context
+    sig { returns(PrestoParser::QueryContext) }
+    def query; end
+
+    sig { returns(PrestoParser::TerminalNodeImpl) }
+    def EOF; end
+  end
+
   class QueryContext < PrestoParser::Context
     sig { returns(PrestoParser::QueryNoWithContext) }
     def query_no_with; end
 
     sig { returns(PrestoParser::WithContext) }
     def with; end
-
-    sig { returns(PrestoParser::TerminalNodeImpl) }
-    def EOF; end
   end
 
   class QueryNoWithContext < PrestoParser::Context

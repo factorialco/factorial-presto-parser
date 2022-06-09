@@ -24,6 +24,10 @@ module PrestoParser
     def visit_terminal_node(context)
       visit_children(context)
     end
+    sig { params(context: PrestoParser::SingleQueryContext).returns(T.untyped) }
+    def visit_single_query(context)
+      visit_children(context)
+    end
     sig { params(context: PrestoParser::QueryContext).returns(T.untyped) }
     def visit_query(context)
       visit_children(context)
@@ -585,7 +589,7 @@ module PrestoParser
 
     sig { params(input: String).returns(PrestoParser::Context) }
     def parse(input)
-      PrestoParser::Parser.parse(input).query
+      PrestoParser::Parser.parse(input).singleQuery
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
@@ -594,6 +598,8 @@ module PrestoParser
       case context
       when PrestoParser::TerminalNodeImpl
         visit_terminal_node(context)
+      when PrestoParser::SingleQueryContext
+        visit_single_query(context)
       when PrestoParser::QueryContext
         visit_query(context)
       when PrestoParser::QueryNoWithContext

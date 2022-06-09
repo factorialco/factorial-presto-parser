@@ -16,4 +16,4 @@ end
 
 puts CustomVisitor.new
   .accept('SELECT * FROM (SELECT * FROM `your_face`)')
-  .join(' ')
+  .inspect
