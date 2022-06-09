@@ -13,6 +13,7 @@
  */
 
 grammar Presto;
+options { caseInsensitive = true; }
 
 tokens {
     DELIMITER
