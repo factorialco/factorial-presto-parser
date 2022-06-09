@@ -1,5 +1,17 @@
-# typed: false
+# typed: strict
 require 'presto_parser'
 
-puts PrestoParser::Parser.parse('SELECT * FROM `somewhere`')
-    .query
+class CustomVisitor < ::PrestoParser::AstVisitor
+  # extend T::Sig
+
+  # sig do
+  #   override
+  #     .params(context: PrestoParser::QuerySpecificationContext)
+  #     .returns(String)
+  # end
+  def visit_query_specification(context)
+    puts 'Hello!'
+  end
+end
+
+CustomVisitor.new.accept('SELECT * FROM `your_face`')

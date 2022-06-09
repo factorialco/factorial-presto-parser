@@ -1,11 +1,15 @@
 # typed: strict
 # frozen_string_literal: true
 
+require 'sorbet'
+
 module PrestoParser
-  class Visitor
+  class AstVisitor
     extend T::Sig
 
     UnrecognizedContextError = Class.new(StandardError)
+
+    puts 'hola'
 
     sig { params(input: String).returns(T.untyped) }
     def accept(input)

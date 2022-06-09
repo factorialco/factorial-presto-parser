@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
   s.files = Dir[
-    '{lib,spec}/**/*',
+    '{lib,spec,rbi}/**/*',
     'ext/presto_parser/*.{cpp,h}',
     'ext/presto_parser/extconf.rb',
     'ext/presto_parser/antlrgen/*',
