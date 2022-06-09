@@ -55,23 +55,23 @@ public:
   };
 
   enum {
-    RuleQuery = 0, RuleWith = 1, RuleTableElement = 2, RuleColumnDefinition = 3, 
-    RuleLikeClause = 4, RuleTableProperties = 5, RuleTableProperty = 6, 
-    RuleQueryNoWith = 7, RuleQueryTerm = 8, RuleQueryPrimary = 9, RuleSortItem = 10, 
-    RuleQuerySpecification = 11, RuleGroupBy = 12, RuleGroupingElement = 13, 
-    RuleGroupingExpressions = 14, RuleGroupingSet = 15, RuleNamedQuery = 16, 
-    RuleSetQuantifier = 17, RuleSelectItem = 18, RuleRelation = 19, RuleJoinType = 20, 
-    RuleJoinCriteria = 21, RuleSampledRelation = 22, RuleSampleType = 23, 
-    RuleAliasedRelation = 24, RuleColumnAliases = 25, RuleRelationPrimary = 26, 
-    RuleExpression = 27, RuleBooleanExpression = 28, RulePredicated = 29, 
-    RulePredicate = 30, RuleValueExpression = 31, RulePrimaryExpression = 32, 
-    RuleTimeZoneSpecifier = 33, RuleComparisonOperator = 34, RuleComparisonQuantifier = 35, 
-    RuleBooleanValue = 36, RuleInterval = 37, RuleIntervalField = 38, RuleType = 39, 
-    RuleTypeParameter = 40, RuleBaseType = 41, RuleWhenClause = 42, RuleFilter = 43, 
-    RuleOver = 44, RuleWindowFrame = 45, RuleFrameBound = 46, RuleExplainOption = 47, 
-    RuleTransactionMode = 48, RuleLevelOfIsolation = 49, RuleCallArgument = 50, 
-    RulePrivilege = 51, RuleQualifiedName = 52, RuleIdentifier = 53, RuleQuotedIdentifier = 54, 
-    RuleNumber = 55, RuleNonReserved = 56, RuleNormalForm = 57
+    RuleSingleQuery = 0, RuleQuery = 1, RuleWith = 2, RuleTableElement = 3, 
+    RuleColumnDefinition = 4, RuleLikeClause = 5, RuleTableProperties = 6, 
+    RuleTableProperty = 7, RuleQueryNoWith = 8, RuleQueryTerm = 9, RuleQueryPrimary = 10, 
+    RuleSortItem = 11, RuleQuerySpecification = 12, RuleGroupBy = 13, RuleGroupingElement = 14, 
+    RuleGroupingExpressions = 15, RuleGroupingSet = 16, RuleNamedQuery = 17, 
+    RuleSetQuantifier = 18, RuleSelectItem = 19, RuleRelation = 20, RuleJoinType = 21, 
+    RuleJoinCriteria = 22, RuleSampledRelation = 23, RuleSampleType = 24, 
+    RuleAliasedRelation = 25, RuleColumnAliases = 26, RuleRelationPrimary = 27, 
+    RuleExpression = 28, RuleBooleanExpression = 29, RulePredicated = 30, 
+    RulePredicate = 31, RuleValueExpression = 32, RulePrimaryExpression = 33, 
+    RuleTimeZoneSpecifier = 34, RuleComparisonOperator = 35, RuleComparisonQuantifier = 36, 
+    RuleBooleanValue = 37, RuleInterval = 38, RuleIntervalField = 39, RuleType = 40, 
+    RuleTypeParameter = 41, RuleBaseType = 42, RuleWhenClause = 43, RuleFilter = 44, 
+    RuleOver = 45, RuleWindowFrame = 46, RuleFrameBound = 47, RuleExplainOption = 48, 
+    RuleTransactionMode = 49, RuleLevelOfIsolation = 50, RuleCallArgument = 51, 
+    RulePrivilege = 52, RuleQualifiedName = 53, RuleIdentifier = 54, RuleQuotedIdentifier = 55, 
+    RuleNumber = 56, RuleNonReserved = 57, RuleNormalForm = 58
   };
 
   explicit PrestoParser(antlr4::TokenStream *input);
@@ -91,6 +91,7 @@ public:
   antlr4::atn::SerializedATNView getSerializedATN() const override;
 
 
+  class SingleQueryContext;
   class QueryContext;
   class WithContext;
   class TableElementContext;
@@ -150,12 +151,27 @@ public:
   class NonReservedContext;
   class NormalFormContext; 
 
+  class  SingleQueryContext : public antlr4::ParserRuleContext {
+  public:
+    SingleQueryContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    QueryContext *query();
+    antlr4::tree::TerminalNode *EOF();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  SingleQueryContext* singleQuery();
+
   class  QueryContext : public antlr4::ParserRuleContext {
   public:
     QueryContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     QueryNoWithContext *queryNoWith();
-    antlr4::tree::TerminalNode *EOF();
     WithContext *with();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;

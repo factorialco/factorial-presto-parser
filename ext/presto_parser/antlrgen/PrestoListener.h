@@ -14,6 +14,9 @@
 class  PrestoListener : public antlr4::tree::ParseTreeListener {
 public:
 
+  virtual void enterSingleQuery(PrestoParser::SingleQueryContext *ctx) = 0;
+  virtual void exitSingleQuery(PrestoParser::SingleQueryContext *ctx) = 0;
+
   virtual void enterQuery(PrestoParser::QueryContext *ctx) = 0;
   virtual void exitQuery(PrestoParser::QueryContext *ctx) = 0;
 
