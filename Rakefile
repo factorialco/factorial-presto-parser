@@ -1,3 +1,5 @@
+# typed: ignore
+
 require 'bundler'
 
 require 'antlr4-native'
@@ -13,7 +15,7 @@ task :generate do
   generator = Antlr4Native::Generator.new(
     grammar_files:      ["./Presto.g4"],
     output_dir:         'ext/',
-    parser_root_method: 'query'
+    parser_root_method: 'singleQuery'
   )
 
   generator.generate

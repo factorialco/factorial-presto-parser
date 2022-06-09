@@ -2,16 +2,18 @@
 require 'presto_parser'
 
 class CustomVisitor < ::PrestoParser::AstVisitor
-  # extend T::Sig
+  extend T::Sig
 
-  # sig do
-  #   override
-  #     .params(context: PrestoParser::QuerySpecificationContext)
-  #     .returns(String)
-  # end
-  def visit_query_specification(context)
-    puts 'Hello!'
+  sig do
+    override
+      .params(context: PrestoParser::TerminalNodeImpl)
+      .returns(String)
+  end
+  def visit_terminal_node(context)
+    context.text
   end
 end
 
-CustomVisitor.new.accept('SELECT * FROM `your_face`')
+puts CustomVisitor.new
+  .accept('SELECT * FROM (SELECT * FROM `your_face`)')
+  .join(' ')
