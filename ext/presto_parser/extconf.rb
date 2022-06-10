@@ -1,4 +1,3 @@
-# typed: false
 
 require 'mkmf-rice'
 

@@ -1772,5 +1772,308 @@ module PrestoParser
     sig { returns(PrestoParser::TerminalNodeImpl) }
     def INTEGER_VALUE; end
   end
+
+  class UnrecognizedContextError < StandardError; end
+
+  class AstVisitor
+    sig { params(input: String).returns(T.untyped) }
+    def accept(input); end
+
+    protected
+
+    sig { params(context: PrestoParser::Context).returns(T::Array[T.untyped]) }
+    def visit_children(context); end
+
+    sig { params(context: PrestoParser::TerminalNodeImpl).returns(T.untyped) }
+    def visit_terminal_node(context); end
+    sig { params(context: PrestoParser::SingleQueryContext).returns(T.untyped) }
+    def visit_single_query(context); end
+    sig { params(context: PrestoParser::QueryContext).returns(T.untyped) }
+    def visit_query(context); end
+    sig { params(context: PrestoParser::QueryNoWithContext).returns(T.untyped) }
+    def visit_query_no_with(context); end
+    sig { params(context: PrestoParser::WithContext).returns(T.untyped) }
+    def visit_with(context); end
+    sig { params(context: PrestoParser::NamedQueryContext).returns(T.untyped) }
+    def visit_named_query(context); end
+    sig { params(context: PrestoParser::TableElementContext).returns(T.untyped) }
+    def visit_table_element(context); end
+    sig { params(context: PrestoParser::ColumnDefinitionContext).returns(T.untyped) }
+    def visit_column_definition(context); end
+    sig { params(context: PrestoParser::LikeClauseContext).returns(T.untyped) }
+    def visit_like_clause(context); end
+    sig { params(context: PrestoParser::IdentifierContext).returns(T.untyped) }
+    def visit_identifier(context); end
+    sig { params(context: PrestoParser::TypeContext).returns(T.untyped) }
+    def visit_type(context); end
+    sig { params(context: PrestoParser::QualifiedNameContext).returns(T.untyped) }
+    def visit_qualified_name(context); end
+    sig { params(context: PrestoParser::TablePropertiesContext).returns(T.untyped) }
+    def visit_table_properties(context); end
+    sig { params(context: PrestoParser::TablePropertyContext).returns(T.untyped) }
+    def visit_table_property(context); end
+    sig { params(context: PrestoParser::ExpressionContext).returns(T.untyped) }
+    def visit_expression(context); end
+    sig { params(context: PrestoParser::QueryTermContext).returns(T.untyped) }
+    def visit_query_term(context); end
+    sig { params(context: PrestoParser::SortItemContext).returns(T.untyped) }
+    def visit_sort_item(context); end
+    sig { params(context: PrestoParser::QueryPrimaryContext).returns(T.untyped) }
+    def visit_query_primary(context); end
+    sig { params(context: PrestoParser::QueryTermDefaultContext).returns(T.untyped) }
+    def visit_query_term_default(context); end
+    sig { params(context: PrestoParser::SetOperationContext).returns(T.untyped) }
+    def visit_set_operation(context); end
+    sig { params(context: PrestoParser::SetQuantifierContext).returns(T.untyped) }
+    def visit_set_quantifier(context); end
+    sig { params(context: PrestoParser::SubqueryContext).returns(T.untyped) }
+    def visit_subquery(context); end
+    sig { params(context: PrestoParser::QuerySpecificationContext).returns(T.untyped) }
+    def visit_query_specification(context); end
+    sig { params(context: PrestoParser::QueryPrimaryDefaultContext).returns(T.untyped) }
+    def visit_query_primary_default(context); end
+    sig { params(context: PrestoParser::TableContext).returns(T.untyped) }
+    def visit_table(context); end
+    sig { params(context: PrestoParser::InlineTableContext).returns(T.untyped) }
+    def visit_inline_table(context); end
+    sig { params(context: PrestoParser::SelectItemContext).returns(T.untyped) }
+    def visit_select_item(context); end
+    sig { params(context: PrestoParser::RelationContext).returns(T.untyped) }
+    def visit_relation(context); end
+    sig { params(context: PrestoParser::GroupByContext).returns(T.untyped) }
+    def visit_group_by(context); end
+    sig { params(context: PrestoParser::BooleanExpressionContext).returns(T.untyped) }
+    def visit_boolean_expression(context); end
+    sig { params(context: PrestoParser::GroupingElementContext).returns(T.untyped) }
+    def visit_grouping_element(context); end
+    sig { params(context: PrestoParser::MultipleGroupingSetsContext).returns(T.untyped) }
+    def visit_multiple_grouping_sets(context); end
+    sig { params(context: PrestoParser::GroupingSetContext).returns(T.untyped) }
+    def visit_grouping_set(context); end
+    sig { params(context: PrestoParser::GroupingExpressionsContext).returns(T.untyped) }
+    def visit_grouping_expressions(context); end
+    sig { params(context: PrestoParser::SingleGroupingSetContext).returns(T.untyped) }
+    def visit_single_grouping_set(context); end
+    sig { params(context: PrestoParser::CubeContext).returns(T.untyped) }
+    def visit_cube(context); end
+    sig { params(context: PrestoParser::RollupContext).returns(T.untyped) }
+    def visit_rollup(context); end
+    sig { params(context: PrestoParser::ColumnAliasesContext).returns(T.untyped) }
+    def visit_column_aliases(context); end
+    sig { params(context: PrestoParser::SelectAllContext).returns(T.untyped) }
+    def visit_select_all(context); end
+    sig { params(context: PrestoParser::SelectSingleContext).returns(T.untyped) }
+    def visit_select_single(context); end
+    sig { params(context: PrestoParser::SampledRelationContext).returns(T.untyped) }
+    def visit_sampled_relation(context); end
+    sig { params(context: PrestoParser::RelationDefaultContext).returns(T.untyped) }
+    def visit_relation_default(context); end
+    sig { params(context: PrestoParser::JoinRelationContext).returns(T.untyped) }
+    def visit_join_relation(context); end
+    sig { params(context: PrestoParser::JoinTypeContext).returns(T.untyped) }
+    def visit_join_type(context); end
+    sig { params(context: PrestoParser::JoinCriteriaContext).returns(T.untyped) }
+    def visit_join_criteria(context); end
+    sig { params(context: PrestoParser::AliasedRelationContext).returns(T.untyped) }
+    def visit_aliased_relation(context); end
+    sig { params(context: PrestoParser::SampleTypeContext).returns(T.untyped) }
+    def visit_sample_type(context); end
+    sig { params(context: PrestoParser::RelationPrimaryContext).returns(T.untyped) }
+    def visit_relation_primary(context); end
+    sig { params(context: PrestoParser::SubqueryRelationContext).returns(T.untyped) }
+    def visit_subquery_relation(context); end
+    sig { params(context: PrestoParser::ParenthesizedRelationContext).returns(T.untyped) }
+    def visit_parenthesized_relation(context); end
+    sig { params(context: PrestoParser::UnnestContext).returns(T.untyped) }
+    def visit_unnest(context); end
+    sig { params(context: PrestoParser::TableNameContext).returns(T.untyped) }
+    def visit_table_name(context); end
+    sig { params(context: PrestoParser::LogicalNotContext).returns(T.untyped) }
+    def visit_logical_not(context); end
+    sig { params(context: PrestoParser::PredicatedContext).returns(T.untyped) }
+    def visit_predicated(context); end
+    sig { params(context: PrestoParser::BooleanDefaultContext).returns(T.untyped) }
+    def visit_boolean_default(context); end
+    sig { params(context: PrestoParser::LogicalBinaryContext).returns(T.untyped) }
+    def visit_logical_binary(context); end
+    sig { params(context: PrestoParser::ValueExpressionContext).returns(T.untyped) }
+    def visit_value_expression(context); end
+    sig { params(context: PrestoParser::PredicateContext).returns(T.untyped) }
+    def visit_predicate(context); end
+    sig { params(context: PrestoParser::ComparisonOperatorContext).returns(T.untyped) }
+    def visit_comparison_operator(context); end
+    sig { params(context: PrestoParser::ComparisonContext).returns(T.untyped) }
+    def visit_comparison(context); end
+    sig { params(context: PrestoParser::LikeContext).returns(T.untyped) }
+    def visit_like(context); end
+    sig { params(context: PrestoParser::InSubqueryContext).returns(T.untyped) }
+    def visit_in_subquery(context); end
+    sig { params(context: PrestoParser::DistinctFromContext).returns(T.untyped) }
+    def visit_distinct_from(context); end
+    sig { params(context: PrestoParser::InListContext).returns(T.untyped) }
+    def visit_in_list(context); end
+    sig { params(context: PrestoParser::NullPredicateContext).returns(T.untyped) }
+    def visit_null_predicate(context); end
+    sig { params(context: PrestoParser::BetweenContext).returns(T.untyped) }
+    def visit_between(context); end
+    sig { params(context: PrestoParser::QuantifiedComparisonContext).returns(T.untyped) }
+    def visit_quantified_comparison(context); end
+    sig { params(context: PrestoParser::ComparisonQuantifierContext).returns(T.untyped) }
+    def visit_comparison_quantifier(context); end
+    sig { params(context: PrestoParser::PrimaryExpressionContext).returns(T.untyped) }
+    def visit_primary_expression(context); end
+    sig { params(context: PrestoParser::ValueExpressionDefaultContext).returns(T.untyped) }
+    def visit_value_expression_default(context); end
+    sig { params(context: PrestoParser::ConcatenationContext).returns(T.untyped) }
+    def visit_concatenation(context); end
+    sig { params(context: PrestoParser::ArithmeticBinaryContext).returns(T.untyped) }
+    def visit_arithmetic_binary(context); end
+    sig { params(context: PrestoParser::ArithmeticUnaryContext).returns(T.untyped) }
+    def visit_arithmetic_unary(context); end
+    sig { params(context: PrestoParser::AtTimeZoneContext).returns(T.untyped) }
+    def visit_at_time_zone(context); end
+    sig { params(context: PrestoParser::TimeZoneSpecifierContext).returns(T.untyped) }
+    def visit_time_zone_specifier(context); end
+    sig { params(context: PrestoParser::DereferenceContext).returns(T.untyped) }
+    def visit_dereference(context); end
+    sig { params(context: PrestoParser::TypeConstructorContext).returns(T.untyped) }
+    def visit_type_constructor(context); end
+    sig { params(context: PrestoParser::SpecialDateTimeFunctionContext).returns(T.untyped) }
+    def visit_special_date_time_function(context); end
+    sig { params(context: PrestoParser::SubstringContext).returns(T.untyped) }
+    def visit_substring(context); end
+    sig { params(context: PrestoParser::CastContext).returns(T.untyped) }
+    def visit_cast(context); end
+    sig { params(context: PrestoParser::LambdaContext).returns(T.untyped) }
+    def visit_lambda(context); end
+    sig { params(context: PrestoParser::ParenthesizedExpressionContext).returns(T.untyped) }
+    def visit_parenthesized_expression(context); end
+    sig { params(context: PrestoParser::ParameterContext).returns(T.untyped) }
+    def visit_parameter(context); end
+    sig { params(context: PrestoParser::NormalizeContext).returns(T.untyped) }
+    def visit_normalize(context); end
+    sig { params(context: PrestoParser::NormalFormContext).returns(T.untyped) }
+    def visit_normal_form(context); end
+    sig { params(context: PrestoParser::IntervalContext).returns(T.untyped) }
+    def visit_interval(context); end
+    sig { params(context: PrestoParser::IntervalLiteralContext).returns(T.untyped) }
+    def visit_interval_literal(context); end
+    sig { params(context: PrestoParser::NumberContext).returns(T.untyped) }
+    def visit_number(context); end
+    sig { params(context: PrestoParser::NumericLiteralContext).returns(T.untyped) }
+    def visit_numeric_literal(context); end
+    sig { params(context: PrestoParser::BooleanValueContext).returns(T.untyped) }
+    def visit_boolean_value(context); end
+    sig { params(context: PrestoParser::BooleanLiteralContext).returns(T.untyped) }
+    def visit_boolean_literal(context); end
+    sig { params(context: PrestoParser::SimpleCaseContext).returns(T.untyped) }
+    def visit_simple_case(context); end
+    sig { params(context: PrestoParser::WhenClauseContext).returns(T.untyped) }
+    def visit_when_clause(context); end
+    sig { params(context: PrestoParser::ColumnReferenceContext).returns(T.untyped) }
+    def visit_column_reference(context); end
+    sig { params(context: PrestoParser::NullLiteralContext).returns(T.untyped) }
+    def visit_null_literal(context); end
+    sig { params(context: PrestoParser::RowConstructorContext).returns(T.untyped) }
+    def visit_row_constructor(context); end
+    sig { params(context: PrestoParser::SubscriptContext).returns(T.untyped) }
+    def visit_subscript(context); end
+    sig { params(context: PrestoParser::SubqueryExpressionContext).returns(T.untyped) }
+    def visit_subquery_expression(context); end
+    sig { params(context: PrestoParser::BinaryLiteralContext).returns(T.untyped) }
+    def visit_binary_literal(context); end
+    sig { params(context: PrestoParser::ExtractContext).returns(T.untyped) }
+    def visit_extract(context); end
+    sig { params(context: PrestoParser::StringLiteralContext).returns(T.untyped) }
+    def visit_string_literal(context); end
+    sig { params(context: PrestoParser::ArrayConstructorContext).returns(T.untyped) }
+    def visit_array_constructor(context); end
+    sig { params(context: PrestoParser::FunctionCallContext).returns(T.untyped) }
+    def visit_function_call(context); end
+    sig { params(context: PrestoParser::FilterContext).returns(T.untyped) }
+    def visit_filter(context); end
+    sig { params(context: PrestoParser::OverContext).returns(T.untyped) }
+    def visit_over(context); end
+    sig { params(context: PrestoParser::ExistsContext).returns(T.untyped) }
+    def visit_exists(context); end
+    sig { params(context: PrestoParser::PositionContext).returns(T.untyped) }
+    def visit_position(context); end
+    sig { params(context: PrestoParser::SearchedCaseContext).returns(T.untyped) }
+    def visit_searched_case(context); end
+    sig { params(context: PrestoParser::TimeZoneIntervalContext).returns(T.untyped) }
+    def visit_time_zone_interval(context); end
+    sig { params(context: PrestoParser::TimeZoneStringContext).returns(T.untyped) }
+    def visit_time_zone_string(context); end
+    sig { params(context: PrestoParser::IntervalFieldContext).returns(T.untyped) }
+    def visit_interval_field(context); end
+    sig { params(context: PrestoParser::BaseTypeContext).returns(T.untyped) }
+    def visit_base_type(context); end
+    sig { params(context: PrestoParser::TypeParameterContext).returns(T.untyped) }
+    def visit_type_parameter(context); end
+    sig { params(context: PrestoParser::WindowFrameContext).returns(T.untyped) }
+    def visit_window_frame(context); end
+    sig { params(context: PrestoParser::FrameBoundContext).returns(T.untyped) }
+    def visit_frame_bound(context); end
+    sig { params(context: PrestoParser::BoundedFrameContext).returns(T.untyped) }
+    def visit_bounded_frame(context); end
+    sig { params(context: PrestoParser::UnboundedFrameContext).returns(T.untyped) }
+    def visit_unbounded_frame(context); end
+    sig { params(context: PrestoParser::CurrentRowBoundContext).returns(T.untyped) }
+    def visit_current_row_bound(context); end
+    sig { params(context: PrestoParser::ExplainOptionContext).returns(T.untyped) }
+    def visit_explain_option(context); end
+    sig { params(context: PrestoParser::ExplainFormatContext).returns(T.untyped) }
+    def visit_explain_format(context); end
+    sig { params(context: PrestoParser::ExplainTypeContext).returns(T.untyped) }
+    def visit_explain_type(context); end
+    sig { params(context: PrestoParser::TransactionModeContext).returns(T.untyped) }
+    def visit_transaction_mode(context); end
+    sig { params(context: PrestoParser::TransactionAccessModeContext).returns(T.untyped) }
+    def visit_transaction_access_mode(context); end
+    sig { params(context: PrestoParser::IsolationLevelContext).returns(T.untyped) }
+    def visit_isolation_level(context); end
+    sig { params(context: PrestoParser::LevelOfIsolationContext).returns(T.untyped) }
+    def visit_level_of_isolation(context); end
+    sig { params(context: PrestoParser::ReadUncommittedContext).returns(T.untyped) }
+    def visit_read_uncommitted(context); end
+    sig { params(context: PrestoParser::SerializableContext).returns(T.untyped) }
+    def visit_serializable(context); end
+    sig { params(context: PrestoParser::ReadCommittedContext).returns(T.untyped) }
+    def visit_read_committed(context); end
+    sig { params(context: PrestoParser::RepeatableReadContext).returns(T.untyped) }
+    def visit_repeatable_read(context); end
+    sig { params(context: PrestoParser::CallArgumentContext).returns(T.untyped) }
+    def visit_call_argument(context); end
+    sig { params(context: PrestoParser::PositionalArgumentContext).returns(T.untyped) }
+    def visit_positional_argument(context); end
+    sig { params(context: PrestoParser::NamedArgumentContext).returns(T.untyped) }
+    def visit_named_argument(context); end
+    sig { params(context: PrestoParser::PrivilegeContext).returns(T.untyped) }
+    def visit_privilege(context); end
+    sig { params(context: PrestoParser::BackQuotedIdentifierContext).returns(T.untyped) }
+    def visit_back_quoted_identifier(context); end
+    sig { params(context: PrestoParser::QuotedIdentifierContext).returns(T.untyped) }
+    def visit_quoted_identifier(context); end
+    sig { params(context: PrestoParser::QuotedIdentifierAlternativeContext).returns(T.untyped) }
+    def visit_quoted_identifier_alternative(context); end
+    sig { params(context: PrestoParser::DigitIdentifierContext).returns(T.untyped) }
+    def visit_digit_identifier(context); end
+    sig { params(context: PrestoParser::UnquotedIdentifierContext).returns(T.untyped) }
+    def visit_unquoted_identifier(context); end
+    sig { params(context: PrestoParser::NonReservedContext).returns(T.untyped) }
+    def visit_non_reserved(context); end
+    sig { params(context: PrestoParser::DecimalLiteralContext).returns(T.untyped) }
+    def visit_decimal_literal(context); end
+    sig { params(context: PrestoParser::IntegerLiteralContext).returns(T.untyped) }
+    def visit_integer_literal(context); end
+
+    private
+
+    sig { params(input: String).returns(PrestoParser::Context) }
+    def parse(input); end
+
+    sig { params(context: PrestoParser::Context).returns(T.untyped) }
+    def visit(context); end
+  end
 end
 # rubocop:enable Metrics/ModuleLength, Naming/MethodName

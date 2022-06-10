@@ -1,4 +1,3 @@
-# typed: ignore
 
 require 'bundler'
 
