@@ -14,12 +14,12 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rice', '~> 4.0'
 
-  s.extensions = File.join(*%w(ext presto_parser extconf.rb))
+  s.extensions = File.join('ext', 'presto_parser', 'extconf.rb')
   s.licenses = ['MIT']
 
   s.require_path = 'lib'
   s.files = Dir[
-    '{lib,spec,rbi}/**/*',
+    '{lib,spec}/**/*',
     'ext/presto_parser/*.{cpp,h}',
     'ext/presto_parser/extconf.rb',
     'ext/presto_parser/antlrgen/*',
