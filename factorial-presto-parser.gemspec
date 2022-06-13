@@ -2,7 +2,7 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'presto_parser/version'
 
 Gem::Specification.new do |s|
-  s.name     = 'presto_parser'
+  s.name     = 'factorial-presto-parser'
   s.version  = ::PrestoParser::VERSION
   s.authors  = ['Factorial']
   s.email    = ['admin@factorial.co']
@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rice', '~> 4.0'
 
   s.extensions = File.join(*%w(ext presto_parser extconf.rb))
+  s.licenses = ['MIT']
 
   s.require_path = 'lib'
   s.files = Dir[
@@ -26,6 +27,6 @@ Gem::Specification.new do |s|
     'Gemfile',
     'README.md',
     'Rakefile',
-    'presto_parser.gemspec'
+    'factorial-presto-parser.gemspec'
   ]
 end
