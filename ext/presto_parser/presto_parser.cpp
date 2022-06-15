@@ -4,8 +4,9 @@
 
 #include "antlrgen/PrestoParser.h"
 #include "antlrgen/PrestoBaseVisitor.h"
-#include "antlrgen/PrestoBaseListener.h"
 #include "antlrgen/PrestoLexer.h"
+
+#include "PrestoErrorListener.h"
 
 #include <rice/rice.hpp>
 #include <rice/stl.hpp>
@@ -12857,15 +12858,6 @@ public:
     return getSelf().call("visit_normal_form", &proxy);
   }
 
-};
-
-class PrestoErrorListener : public antlr4::ConsoleErrorListener {
-public:
-  void syntaxError(Recognizer * /*recognizer*/, Token * /*offendingSymbol*/,
-    size_t line, size_t charPositionInLine, const std::string &msg, std::exception_ptr /*e*/)  {
-    std::string message = std::string("line ") + std::to_string(line) + ":" + std::to_string(charPositionInLine) + " " + msg;
-    throw Exception(rb_exc_new_cstr(rb_eStandardError, message.c_str()));
-  }
 };
 
 class ParserProxy {
