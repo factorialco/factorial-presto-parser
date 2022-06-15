@@ -1,0 +1,36 @@
+diff --git a/ext/presto_parser/presto_parser.cpp b/ext/presto_parser/presto_parser.cpp
+index 1d13004..6bbb280 100644
+--- a/ext/presto_parser/presto_parser.cpp
++++ b/ext/presto_parser/presto_parser.cpp
+@@ -4,6 +4,7 @@
+ 
+ #include "antlrgen/PrestoParser.h"
+ #include "antlrgen/PrestoBaseVisitor.h"
++#include "antlrgen/PrestoBaseListener.h"
+ #include "antlrgen/PrestoLexer.h"
+ 
+ #include <rice/rice.hpp>
+@@ -12858,6 +12859,14 @@ public:
+ 
+ };
+ 
++class PrestoErrorListener : public antlr4::ConsoleErrorListener {
++public:
++  void syntaxError(Recognizer * /*recognizer*/, Token * /*offendingSymbol*/,
++    size_t line, size_t charPositionInLine, const std::string &msg, std::exception_ptr /*e*/)  {
++    std::string message = std::string("line ") + std::to_string(line) + ":" + std::to_string(charPositionInLine) + " " + msg;
++    throw Exception(rb_exc_new_cstr(rb_eStandardError, message.c_str()));
++  }
++};
+ 
+ class ParserProxy {
+ public:
+@@ -12910,6 +12919,8 @@ private:
+     parser -> lexer = new PrestoLexer(parser -> input);
+     parser -> tokens = new CommonTokenStream(parser -> lexer);
+     parser -> parser = new PrestoParser(parser -> tokens);
++    parser -> parser -> removeErrorListeners();
++    parser -> parser -> addErrorListener(new PrestoErrorListener());
+ 
+     return parser;
+   }

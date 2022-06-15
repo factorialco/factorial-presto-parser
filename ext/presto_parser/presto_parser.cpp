@@ -12863,7 +12863,8 @@ class PrestoErrorListener : public antlr4::ConsoleErrorListener {
 public:
   void syntaxError(Recognizer * /*recognizer*/, Token * /*offendingSymbol*/,
     size_t line, size_t charPositionInLine, const std::string &msg, std::exception_ptr /*e*/)  {
-    std::cerr << "crankyline " << line << ":" << charPositionInLine << " " << msg << std::endl;
+    std::string message = std::string("line ") + std::to_string(line) + ":" + std::to_string(charPositionInLine) + " " + msg;
+    throw Exception(rb_exc_new_cstr(rb_eStandardError, message.c_str()));
   }
 };
 
@@ -12918,6 +12919,7 @@ private:
     parser -> lexer = new PrestoLexer(parser -> input);
     parser -> tokens = new CommonTokenStream(parser -> lexer);
     parser -> parser = new PrestoParser(parser -> tokens);
+    parser -> parser -> removeErrorListeners();
     parser -> parser -> addErrorListener(new PrestoErrorListener());
 
     return parser;
