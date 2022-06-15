@@ -4,6 +4,7 @@
 
 #include "antlrgen/PrestoParser.h"
 #include "antlrgen/PrestoBaseVisitor.h"
+#include "antlrgen/PrestoBaseListener.h"
 #include "antlrgen/PrestoLexer.h"
 
 #include <rice/rice.hpp>
@@ -12858,6 +12859,13 @@ public:
 
 };
 
+class PrestoErrorListener : public antlr4::ConsoleErrorListener {
+public:
+  void syntaxError(Recognizer * /*recognizer*/, Token * /*offendingSymbol*/,
+    size_t line, size_t charPositionInLine, const std::string &msg, std::exception_ptr /*e*/)  {
+    std::cerr << "crankyline " << line << ":" << charPositionInLine << " " << msg << std::endl;
+  }
+};
 
 class ParserProxy {
 public:
@@ -12910,6 +12918,7 @@ private:
     parser -> lexer = new PrestoLexer(parser -> input);
     parser -> tokens = new CommonTokenStream(parser -> lexer);
     parser -> parser = new PrestoParser(parser -> tokens);
+    parser -> parser -> addErrorListener(new PrestoErrorListener());
 
     return parser;
   }
