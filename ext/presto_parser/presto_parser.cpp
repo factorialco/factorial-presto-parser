@@ -171,7 +171,7 @@ Class rb_cParser;
 Class rb_cParseTree;
 Class rb_cTerminalNode;
 Class rb_cContextProxy;
-VALUE rb_eSyntaxError;
+VALUE rb_ePrestoSyntaxError;
 
 namespace Rice::detail {
   template <>
@@ -12913,7 +12913,7 @@ private:
     parser -> tokens = new CommonTokenStream(parser -> lexer);
     parser -> parser = new PrestoParser(parser -> tokens);
     parser -> parser -> removeErrorListeners();
-    parser -> parser -> addErrorListener(new PrestoErrorListener(rb_eSyntaxError));
+    parser -> parser -> addErrorListener(new PrestoErrorListener(rb_ePrestoSyntaxError));
 
     return parser;
   }
@@ -13512,7 +13512,7 @@ extern "C"
 void Init_presto_parser() {
   Module rb_mPrestoParser = define_module("PrestoParser");
 
-  rb_eSyntaxError = define_class_under(rb_mPrestoParser, "SyntaxError", rb_eStandardError);
+  rb_ePrestoSyntaxError = define_class_under(rb_mPrestoParser, "SyntaxError", rb_eStandardError);
 
   rb_cToken = define_class_under<Token>(rb_mPrestoParser, "Token")
     .define_method("text", &Token::getText)
