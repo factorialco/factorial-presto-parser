@@ -2,6 +2,7 @@ Gemfile.lock
 pkg/
 *.o
 *.o.tmp
+*.so
 ext/presto_parser/Makefile
 ext/presto_parser/mkmf.log
 *.bundle
