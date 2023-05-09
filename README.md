@@ -9,7 +9,7 @@ Note that this gem supports specifically the version 0.172 of Presto, since that
 ```ruby
 bundle install
 rake build
-gem install pkg/presto_parser-1.0.0.gem
+gem install pkg/factorial-presto-parser-[version].gem
 ```
 
 ## Trying it out
